@@ -1,2 +1,2 @@
 require("ohernandez.remap")
-print("Hello from ohernandez")
+require("ohernandez.lazy_init")
