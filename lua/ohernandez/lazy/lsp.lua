@@ -28,6 +28,7 @@ return {
             ensure_installed = {
                 "lua_ls",
                 "pyright",
+                "marksman",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -67,6 +68,12 @@ return {
                                 pythonPath = get_python_path(),
                             }
                         }
+                    }
+                end,
+                ["marksman"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.marksman.setup {
+                        capabilities = capabilities,
                     }
                 end
             }
