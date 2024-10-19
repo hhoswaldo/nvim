@@ -29,6 +29,8 @@ return {
                 "lua_ls",
                 "pyright",
                 "marksman",
+                "dockerls",
+                "docker_compose_language_service"
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -74,6 +76,19 @@ return {
                     local lspconfig = require("lspconfig")
                     lspconfig.marksman.setup {
                         capabilities = capabilities,
+                    }
+                end,
+                ["dockerls"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.dockerls.setup {
+                        capabilities = capabilities,
+                    }
+                end,
+                ["docker_compose_language_service"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.docker_compose_language_service.setup {
+                        capabilities = capabilities,
+                        filetypes = { "yaml.docker-compose" },
                     }
                 end
             }
