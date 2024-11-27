@@ -30,7 +30,8 @@ return {
                 "pyright",
                 "marksman",
                 "dockerls",
-                "docker_compose_language_service"
+                "docker_compose_language_service",
+                "yamlls"
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -90,7 +91,31 @@ return {
                         capabilities = capabilities,
                         filetypes = { "yaml.docker-compose" },
                     }
-                end
+                end,
+                ["yamlls"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.yamlls.setup {
+                        capabilities = capabilities,
+                        settings = {
+                            yaml = {
+                                schemas = {
+                                    ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*"
+                                },
+                                schemaStore = {
+                                    enable = true,
+                                    url = "https://www.schemastore.org/api/json/catalog.json"
+                                },
+                                validate = true,
+                                format = {
+                                    enable = true,
+                                },
+                                hover = true,
+                                completion = true,
+                            }
+                        },
+                        filetypes = { "yaml", "yaml.github-actions" }
+                    }
+                end,
             }
         })
 
